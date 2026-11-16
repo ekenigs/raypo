@@ -96,13 +96,13 @@
     "react": "^19.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
+    "@types/node": "^26.6.6",
     "@types/react": "19.3.0",
     "typescript": "^5.6.0",
     "vite-plus": "catalog:"
   },
   "engines": {
-    "node": ">=22.18.0"
+    "node": ">=26.0.0"
   },
   "packageManager": "pnpm@12.21.0"
 }

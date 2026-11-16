@@ -25,7 +25,7 @@ Your API key is stored by Raycast in its encrypted preferences and is only sent 
 
 ## Install from source
 
-Requirements: macOS with Raycast, Node.js 22.18+ and [pnpm](https://pnpm.io).
+Requirements: macOS with Raycast, Node.js 26+ and [pnpm](https://pnpm.io).
 
 ```bash
 git clone https://github.com/ekenigs/raypo.git
