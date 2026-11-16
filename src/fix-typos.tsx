@@ -1,7 +1,7 @@
-import { Action, ActionPanel, Clipboard, closeMainWindow, Form, Icon, PopToRootType, showHUD } from "@raycast/api";
+import { Action, ActionPanel, Form, Icon } from "@raycast/api";
 import { useState } from "react";
 
-import { runFix, summary } from "./lib/raycast";
+import { deliverFix, runFix } from "./lib/raycast";
 
 export default function Command() {
   const [text, setText] = useState("");
@@ -12,14 +12,7 @@ export default function Command() {
     setIsLoading(true);
     const fixed = await runFix(text);
     setIsLoading(false);
-    if (fixed === undefined) return;
-    await Clipboard.copy(fixed);
-    if (output === "paste") {
-      await closeMainWindow({ popToRootType: PopToRootType.Immediate });
-      await Clipboard.paste(fixed);
-    } else {
-      await showHUD(summary(text, fixed), { popToRootType: PopToRootType.Immediate });
-    }
+    if (fixed !== undefined) await deliverFix(text, fixed, output);
   }
 
   return (

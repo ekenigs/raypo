@@ -20,3 +20,6 @@ jobs:
       # `ray build` generates raycast-env.d.ts (Preferences types), which the type check needs.
       - run: vp run build
       - run: vp check
+      - run: vp run test
+      # Dead code, duplication and complexity; CRAP scores use the coverage from the test step.
+      - run: vp run quality

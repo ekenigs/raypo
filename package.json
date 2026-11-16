@@ -88,6 +88,8 @@
     "check:fix": "vp check --fix",
     "lint": "vp lint",
     "fmt": "vp fmt",
+    "test": "vp test run --coverage",
+    "quality": "fallow --fail-on-issues --coverage coverage/coverage-final.json",
     "test:fix": "vpx scripts/try-fix.ts"
   },
   "dependencies": {
@@ -98,6 +100,8 @@
   "devDependencies": {
     "@types/node": "^26.6.6",
     "@types/react": "19.3.0",
+    "@vitest/coverage-v8": "5.1.0",
+    "fallow": "3.43.1",
     "typescript": "^5.6.0",
     "vite-plus": "catalog:"
   },

@@ -11,9 +11,9 @@ export interface FixOptions {
   claudePath?: string | undefined;
 }
 
-export const DEFAULT_MODEL = "claude-sonnet-5-5";
+const DEFAULT_MODEL = "claude-sonnet-5-5";
 
-export const SYSTEM_PROMPT = `You are an expert proofreader and copy editor. The user sends a piece of text inside <text> tags, often written quickly or by a non-native speaker. Return the text with every mistake fixed.
+const SYSTEM_PROMPT = `You are an expert proofreader and copy editor. The user sends a piece of text inside <text> tags, often written quickly or by a non-native speaker. Return the text with every mistake fixed.
 
 Fix all of these:
 - Typos and misspellings, including wrong but real words (their/there/they're, its/it's, then/than, loose/lose).
@@ -41,11 +41,14 @@ function userMessage(text: string): string {
 
 /** Claude sometimes echoes the wrapper tags; strip them and restore the input's outer whitespace. */
 function cleanOutput(original: string, output: string): string {
-  let result = output.trim();
-  result = result.replace(/^<text>\s*/u, "").replace(/\s*<\/text>$/u, "");
-  const leading = original.match(/^\s*/u)?.[0] ?? "";
-  const trailing = original.match(/\s*$/u)?.[0] ?? "";
-  return leading + result.trim() + trailing;
+  const result = output
+    .trim()
+    .replace(/^<text>\s*/u, "")
+    .replace(/\s*<\/text>$/u, "")
+    .trim();
+  const leading = original.slice(0, original.length - original.trimStart().length);
+  const trailing = original.slice(original.trimEnd().length);
+  return leading + result + trailing;
 }
 
 export async function fixText(text: string, options: FixOptions = {}): Promise<string> {
@@ -80,7 +83,7 @@ const CLAUDE_CANDIDATES = [
   "/usr/local/bin/claude",
 ];
 
-export function findClaudeCli(customPath?: string): string {
+function findClaudeCli(customPath?: string): string {
   const custom = customPath?.trim() ?? "";
   if (custom !== "") {
     if (existsSync(custom)) return custom;

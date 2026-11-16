@@ -1,4 +1,15 @@
-import { environment, getPreferenceValues, getSelectedText, LaunchType, showHUD, showToast, Toast } from "@raycast/api";
+import {
+  Clipboard,
+  closeMainWindow,
+  environment,
+  getPreferenceValues,
+  getSelectedText,
+  LaunchType,
+  PopToRootType,
+  showHUD,
+  showToast,
+  Toast,
+} from "@raycast/api";
 
 import { fixText } from "./fix";
 
@@ -33,6 +44,14 @@ export async function runFix(text: string): Promise<string | undefined> {
   }
 }
 
-export function summary(original: string, fixed: string): string {
-  return original === fixed ? "No typos found — copied to clipboard" : "Fixed text copied to clipboard";
+/** Copies the fixed text, then either pastes it into the frontmost app or confirms with a HUD. */
+export async function deliverFix(original: string, fixed: string, output: "copy" | "paste"): Promise<void> {
+  await Clipboard.copy(fixed);
+  if (output === "paste") {
+    await closeMainWindow({ popToRootType: PopToRootType.Immediate });
+    await Clipboard.paste(fixed);
+    return;
+  }
+  const summary = original === fixed ? "No typos found — copied to clipboard" : "Fixed text copied to clipboard";
+  await showHUD(summary, { popToRootType: PopToRootType.Immediate });
 }

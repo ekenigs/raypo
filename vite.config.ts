@@ -58,10 +58,25 @@ export default defineConfig({
         // CLI script: printing results is its job, and samples run one at a time on purpose.
         rules: { "no-console": "off", "no-await-in-loop": "off" },
       },
+      {
+        // describe() blocks group many cases, so they run long by design.
+        files: ["**/*.test.ts"],
+        rules: { "max-lines-per-function": "off" },
+      },
     ],
     options: {
       typeAware: true,
       typeCheck: true,
+    },
+  },
+  test: {
+    include: ["src/**/*.test.ts"],
+    coverage: {
+      provider: "v8",
+      include: ["src/lib/**/*.ts"],
+      // json feeds measured coverage to fallow's CRAP scores (see the `quality` script).
+      reporter: ["text", "json"],
+      thresholds: { 100: true },
     },
   },
   fmt: {

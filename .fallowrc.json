@@ -1,0 +1,5 @@
+{
+  "$schema": "./node_modules/fallow/schema.json",
+  // Raycast loads each command from src/<name>, as listed in package.json "commands".
+  "entry": ["src/{fix-typos.tsx,fix-selection-in-place.ts}"]
+}
