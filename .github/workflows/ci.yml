@@ -17,5 +17,6 @@ jobs:
         with:
           node-version-file: ".node-version"
           cache: true
-      - run: vp check
+      # `ray build` generates raycast-env.d.ts (Preferences types), which the type check needs.
       - run: vp run build
+      - run: vp check
