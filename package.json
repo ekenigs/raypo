@@ -1,0 +1,108 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "fix-typos",
+  "title": "Fix Typos",
+  "description": "Fix typos, spelling and grammar with Claude and copy the result to the clipboard.",
+  "icon": "icon.png",
+  "author": "elmarkenigs",
+  "license": "MIT",
+  "homepage": "https://github.com/ekenigs/raypo#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekenigs/raypo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ekenigs/raypo/issues"
+  },
+  "keywords": [
+    "raycast",
+    "raycast-extension",
+    "claude",
+    "anthropic",
+    "spellcheck",
+    "grammar",
+    "typos"
+  ],
+  "categories": [
+    "Productivity",
+    "Developer Tools"
+  ],
+  "commands": [
+    {
+      "name": "fix-typos",
+      "title": "Fix Typos",
+      "subtitle": "Claude",
+      "description": "Type or paste text in a text area, fix it, and copy the result to the clipboard.",
+      "mode": "view"
+    },
+    {
+      "name": "fix-selection-in-place",
+      "title": "Fix Typos in Selection",
+      "subtitle": "Claude",
+      "description": "Fix the selected text and replace it in place (also copied to the clipboard).",
+      "mode": "no-view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "apiKey",
+      "title": "Anthropic API Key",
+      "description": "Fastest option. Leave empty to use your logged-in Claude Code CLI instead.",
+      "type": "password",
+      "required": false
+    },
+    {
+      "name": "model",
+      "title": "Model",
+      "description": "Sonnet catches the most mistakes. Haiku is cheaper but misses or invents more.",
+      "type": "dropdown",
+      "required": false,
+      "default": "claude-sonnet-5-5",
+      "data": [
+        {
+          "title": "Claude Sonnet 5.5 (recommended)",
+          "value": "claude-sonnet-5-5"
+        },
+        {
+          "title": "Claude Haiku 5.5",
+          "value": "claude-haiku-5-5"
+        },
+        {
+          "title": "Claude Opus 5.5",
+          "value": "claude-opus-5-5"
+        }
+      ]
+    },
+    {
+      "name": "claudePath",
+      "title": "Claude CLI Path",
+      "description": "Only used without an API key. Leave empty to auto-detect.",
+      "type": "textfield",
+      "required": false
+    }
+  ],
+  "scripts": {
+    "dev": "ray develop",
+    "build": "ray build -e dist",
+    "check": "vp check",
+    "check:fix": "vp check --fix",
+    "lint": "vp lint",
+    "fmt": "vp fmt",
+    "test:fix": "vpx scripts/try-fix.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
+    "@raycast/api": "^2.10.0",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "19.3.0",
+    "typescript": "^5.6.0",
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "packageManager": "pnpm@12.21.0"
+}

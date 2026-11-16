@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "include": ["src/**/*", "scripts/**/*", "raycast-env.d.ts", "vite.config.ts"],
+  "compilerOptions": {
+    // Language & environment
+    "target": "ES2024",
+    "lib": ["ES2024"],
+    "types": ["node"],
+    "jsx": "react-jsx",
+
+    // Modules: Raycast bundles the extension with esbuild, so let the bundler resolve imports.
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+
+    // Emit: type-check only, Raycast (`ray build`) produces the bundle.
+    "noEmit": true,
+
+    // Type checking: core strictness
+    "strict": true,
+
+    // Type checking: additional strictness
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedSideEffectImports": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Type checking: code quality
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+
+    // Interop constraints
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Completeness
+    "skipLibCheck": true
+  }
+}

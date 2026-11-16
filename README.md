@@ -1,0 +1,72 @@
+# Raypo: Fix Typos for Raycast
+
+[![CI](https://github.com/ekenigs/raypo/actions/workflows/ci.yml/badge.svg)](https://github.com/ekenigs/raypo/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+A [Raycast](https://raycast.com) extension that fixes typos, spelling, grammar and punctuation with Claude, keeping your language, tone and formatting.
+
+## Commands
+
+| Command                    | What it does                                                                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Fix Typos**              | Opens a text area. Type or paste text, then press ⌘↵ to fix and copy it, or ⌘⇧↵ to fix and paste it into the app you were in. |
+| **Fix Typos in Selection** | Fixes the selected text and pastes the fix over it (also copied to the clipboard).                                            |
+
+Tip: give **Fix Typos in Selection** a hotkey (Raycast Settings → Extensions → Fix Typos), e.g. `⌥⌘F`. Then select text anywhere, press the hotkey, done.
+
+## How Claude is called
+
+- **Anthropic API key** (preference, recommended): calls the API directly at low effort, the fastest option. Get a key at [console.anthropic.com](https://console.anthropic.com/).
+- **No key**: falls back to your logged-in [Claude Code](https://claude.com/claude-code) CLI (`claude -p`), using your Claude subscription. It works but adds CLI startup time.
+
+The model is configurable in the extension preferences (Sonnet by default, Haiku or Opus).
+
+Your API key is stored by Raycast in its encrypted preferences and is only sent to the Anthropic API. Text you fix is sent to Anthropic (directly or through the Claude CLI) and nowhere else.
+
+## Install from source
+
+Requirements: macOS with Raycast, Node.js 22.18+ and [pnpm](https://pnpm.io).
+
+```bash
+git clone https://github.com/ekenigs/raypo.git
+cd raypo
+pnpm install
+pnpm dev
+```
+
+`pnpm dev` loads the extension into Raycast in development mode. It stays installed after you stop the dev server.
+
+## Development
+
+The project uses [Vite+](https://viteplus.dev) for formatting ([Oxfmt](https://oxc.rs/docs/guide/usage/formatter)), linting ([Oxlint](https://oxc.rs/docs/guide/usage/linter), type-aware) and type checking, all configured in [`vite.config.ts`](vite.config.ts). TypeScript runs in its strictest settings, see [`tsconfig.json`](tsconfig.json).
+
+| Script                     | What it does                                          |
+| -------------------------- | ----------------------------------------------------- |
+| `pnpm dev`                 | Run the extension in Raycast with hot reload          |
+| `pnpm build`               | Build the extension into `dist/`                      |
+| `pnpm check`               | Format check, lint and type-check in one pass         |
+| `pnpm check:fix`           | Format and apply lint autofixes                       |
+| `pnpm test:fix "teh text"` | Run the fix logic outside Raycast against sample text |
+
+`pnpm test:fix` uses `ANTHROPIC_API_KEY` from the environment when set, otherwise the Claude CLI. Without arguments it runs a few built-in samples.
+
+For VS Code, install the recommended [Vite Plus Extension Pack](https://marketplace.visualstudio.com/items?itemName=VoidZero.vite-plus-extension-pack) so format-on-save and lint fixes use the project config.
+
+### Project layout
+
+```
+src/
+  fix-typos.tsx              # "Fix Typos" command (form view)
+  fix-selection-in-place.ts  # "Fix Typos in Selection" command (no view)
+  lib/fix.ts                 # Prompt and Claude calls (API and CLI), no Raycast imports
+  lib/raycast.ts             # Raycast helpers: toasts, selection, preferences
+scripts/try-fix.ts           # Runs lib/fix.ts from the terminal
+```
+
+## Contributing
+
+Issues and pull requests are welcome. Please run `pnpm check` before opening a PR; CI runs the same check and a build.
+
+## License
+
+[MIT](LICENSE)
